@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const Auth = () => {
     const [visible, setVisible] = useState(true); // начальное состояние true (регистрация)
+    
 
     function registers() {
         setVisible(true); // Переключаемся на регистрацию
@@ -19,7 +20,7 @@ const Auth = () => {
                     <div className='inner'>
                         <div className='auth_cont'>
                             <h1 className='title_auth'>Регистрация</h1>
-                            <input type='email' placeholder='Email' className='input_auth'/>
+                            <input type='login' placeholder='Логин' className='input_auth'/>
                             <br/>
                             <input type='password' placeholder='Пароль' className='input_auth'/>
                             <button className='btn_auth'>Отправить</button>
