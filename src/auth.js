@@ -6,7 +6,7 @@ import { getUserByToken, getToken, setToken } from './token';
 // Проверяем наличие токена
 const isAuthenticated = () => !!localStorage.getItem('token');
 
-const Auth = () => {
+const Auth = ({setButton}) => {
     const [visible, setVisible] = useState(!isAuthenticated()); // Показывать форму регистрации, если пользователь не залогинен
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -109,6 +109,9 @@ const Auth = () => {
                             <br />
                             <button className='btn_auth' onClick={toggleForm}>
                                 {visible ? 'У меня уже есть аккаунт' : 'Создать новый аккаунт'}
+                            </button>
+                            <button className='btn_auth' onClick={() => setButton(false)}>
+                                Закрыть окно
                             </button>
                             <p>{visible ? message : message1}</p>
                         </div>
