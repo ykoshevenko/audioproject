@@ -2,20 +2,21 @@ import './auth.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getUserByToken, getToken, setToken } from './token';
+import Like from './like';
 
-// Проверяем наличие токена
 const isAuthenticated = () => !!localStorage.getItem('token');
 
-const Auth = ({setButton}) => {
-    const [visible, setVisible] = useState(!isAuthenticated()); // Показывать форму регистрации, если пользователь не залогинен
+const Auth = ({setCorrect}) => {
+    const [visible, setVisible] = useState(!isAuthenticated());
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const [message1, setMessage1] = useState('');
     const [userData, setUserData] = useState(null);
+    const [save, setSave] = useState(false);
 
     const toggleForm = () => {
-        setVisible(prevState => !prevState); // Переключаем формы регистрации и входа
+        setVisible(prevState => !prevState);
+        setMessage(''); // Очищаем сообщение при переключении формы
     };
 
     useEffect(() => {
@@ -39,7 +40,6 @@ const Auth = ({setButton}) => {
             return;
         }
     
-        // Исправляем выбор эндпоинта
         const endpoint = visible ? 'register/' : 'login/'; 
         const API_BASE_URL = 'http://localhost:8000/users';
     
@@ -49,19 +49,20 @@ const Auth = ({setButton}) => {
                 password 
             });
 
-            if (response.status === 200 && response.data.access_token) {
-                localStorage.setItem("token", response.data.access_token);
-                setMessage(visible ? "Регистрация успешна! Вы можете войти." : "Авторизация прошла успешно!");
-
-                // Если форма входа была активна, переходим на главную страницу
-                if (!visible) {
-                    window.location.reload(); // Можно заменить на переход с использованием React Router
+            if (response.status === 200) {
+                if (response.data.access_token) {
+                    // Для входа
+                    setToken(response.data.access_token);
+                    setMessage("Авторизация прошла успешно!");
+                    setSave(true);
+                } else if (visible) {
+                    // Для регистрации
+                    setMessage("Регистрация успешна! Теперь вы можете войти.");
+                    setVisible(false); // Переключаем на форму входа
+                    setLogin(''); // Очищаем поля
+                    setPassword('');
                 }
             }
-
-            setMessage('Регистрация прошла успешно')
-            setMessage1('Вы успешно вошли в аккаунт')
-
         } catch (error) {
             let errorMessage = 'Ошибка сервера';
             if (error.response) {
@@ -71,19 +72,17 @@ const Auth = ({setButton}) => {
                 errorMessage = error.response.data.message || errorMessage;
             }
             setMessage(`Ошибка: ${errorMessage}`);
-            console.error('Полная ошибка:', error.config);
+            console.error('Ошибка:', error.config);
         }
-
-
     };
 
     return (
         <>
-            {userData ? (
-                <h1>незнаю</h1>
+            {save ? (
+                <Like/>
             ) : (
                 <div className='parent'>
-                <form className='inner' onSubmit={handleSubmit}>
+                    <form className='inner' onSubmit={handleSubmit}>
                         <div className='auth_cont'>
                             <h1 className='title_auth'>{visible ? 'Регистрация' : 'Вход в аккаунт'}</h1>
                             <input
@@ -107,16 +106,16 @@ const Auth = ({setButton}) => {
                                 {visible ? 'Зарегистрироваться' : 'Войти'}
                             </button>
                             <br />
-                            <button className='btn_auth' onClick={toggleForm}>
+                            <button type="button" className='btn_auth' onClick={toggleForm}>
                                 {visible ? 'У меня уже есть аккаунт' : 'Создать новый аккаунт'}
                             </button>
-                            <button className='btn_auth' onClick={() => setButton(false)}>
+                            <button type="button" className='btn_auth' onClick={() => setCorrect('component1')}>
                                 Закрыть окно
                             </button>
-                            <p>{visible ? message : message1}</p>
+                            <p className="auth-message">{message}</p>
                         </div>
-                </form>
-            </div>
+                    </form>
+                </div>
             )}
         </>
     );

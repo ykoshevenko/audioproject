@@ -1,18 +1,32 @@
 import './App.css';
-import News from './news'
 import { useState } from 'react';
 import Header from './header';
 import Auth from './auth'
+import HomePage from './home';
+import Search from './search';
 
 function App() {
-  const [buttons, setButton] = useState(false)
+  const [correct, setCorrect] = useState('component1')
+
+  const renderComponents = () => {
+      switch(correct) {
+        case 'component1' :
+          return <HomePage/>
+        case 'component2':
+          return <Auth setCorrect={setCorrect}/>
+        case 'component3':
+          return <Search/>
+      }
+  }
 
   return(
     <>
-      <Header setButton={setButton}/>
-      <News buttons={buttons} setButton={setButton}/>
+      <Header setCorrect={setCorrect}/>
+      {/* <News buttons={buttons} setButton={setButton}/> */}
+      {renderComponents()}
     </>
   )
 }
 
 export default App;
+

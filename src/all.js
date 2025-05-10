@@ -1,10 +1,10 @@
-import './App.css';
-import Auth from './auth'
+// import './App.css';
+// import Auth from './auth'
 
-function All() {
-  return(
+// function All() {
+//   return(
     
-  )
-}
+//   )
+// }
 
-export default All;
+// export default All;

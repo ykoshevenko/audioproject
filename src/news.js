@@ -1,4 +1,7 @@
 import Auth from './auth'
+import HomePage from './home'
+import searchpage from './search'
+import { useState } from 'react'
 
 function News({buttons, setButton}) {
     return (
@@ -6,6 +9,7 @@ function News({buttons, setButton}) {
             {buttons ? (
                 <Auth setButton={setButton}/>
             ) : null}
+
         </>
     )
 }
