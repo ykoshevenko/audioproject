@@ -4,6 +4,7 @@ import Header from './header';
 import Auth from './auth'
 import HomePage from './home';
 import Search from './search';
+import SoundSettings from './soundSett';
 
 function App() {
   const [correct, setCorrect] = useState('component1')
@@ -21,9 +22,11 @@ function App() {
 
   return(
     <>
+      <h1 className='title'>Название</h1>
       <Header setCorrect={setCorrect}/>
       {/* <News buttons={buttons} setButton={setButton}/> */}
       {renderComponents()}
+      <SoundSettings/>
     </>
   )
 }

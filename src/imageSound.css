@@ -1,0 +1,9 @@
+.shape {
+    width: 40em;
+    height: 24em;
+    background-color: #636363;
+    border-radius: 0 0 300px 300px / 0 0 300px 300px;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+}

@@ -1,0 +1,4 @@
+.scroll-list-home {
+    max-height: 25em; /* Максимальная высота, после которой появится скролл */
+    overflow-y: auto;
+}

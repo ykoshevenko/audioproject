@@ -1,10 +1,26 @@
+import './home.css'
+import ImageSound from './imageSound'
+import SoundItem from './sounditem'
+
 function HomePage() {
     return (
         <div>
-            <h1>Песня 1</h1>
-            <h1>Песня 2</h1>
-            <h1>Песня 3</h1>
-            <h1>Песня 4</h1>
+            <ImageSound/>
+            <div className="scroll-list-home">
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+                <SoundItem/>
+            </div>
         </div>
     )
 }

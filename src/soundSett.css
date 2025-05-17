@@ -1,0 +1,21 @@
+.soundConteiner {
+    display: flex;           
+    justify-content: center; 
+    gap: 12em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 1000;
+
+    /* position: fixed; */
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(3, auto); 
+    justify-items: center;                 
+    align-items: center;
+    gap: 3em;
+}

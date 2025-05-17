@@ -1,0 +1,4 @@
+.scroll-list {
+    max-height: 300px; /* Максимальная высота, после которой появится скролл */
+    overflow-y: auto;
+}
