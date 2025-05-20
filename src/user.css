@@ -1,0 +1,45 @@
+.headerUser {
+    width: 100%;
+    height: 15em;
+    background: linear-gradient(90deg,rgba(0, 149, 255, 1) 0%, rgba(11, 191, 164, 1) 35%, rgba(0, 191, 255, 1) 100%);
+    color: white;
+}
+
+.avatarUser {
+    width: 7em;
+    height: 7em;
+    background-color: brown;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nameUser {
+    text-align: center;
+}
+
+.settings {
+   text-align: center;
+}
+
+.button {
+    color:#00c6ff;
+    text-transform: uppercase;
+    text-decoration:none;
+    text-align:center;
+    display: block;
+    background-image: linear-gradient(to left,transparent,transparent 50%,#00c6ff 50%,#00c6ff);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .25s ease-in;
+    font: 400 18px tahoma;
+    border: 1px solid #00C6FF;
+    width: 10em;
+    height: 3em;
+}
+
+.button:hover {
+    background-position: 0 0;
+    color:#fff;
+}
+    

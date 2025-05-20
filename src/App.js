@@ -5,6 +5,7 @@ import Auth from './auth'
 import HomePage from './home';
 import Search from './search';
 import SoundSettings from './soundSett';
+import User from './user';
 
 function App() {
   const [correct, setCorrect] = useState('component1')
@@ -17,6 +18,8 @@ function App() {
           return <Auth setCorrect={setCorrect}/>
         case 'component3':
           return <Search/>
+        case 'component4': 
+          return <User/>
       }
   }
 
