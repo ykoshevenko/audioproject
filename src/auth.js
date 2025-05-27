@@ -6,7 +6,7 @@ import Like from './like';
 
 const isAuthenticated = () => !!localStorage.getItem('token');
 
-const Auth = ({setCorrect}) => {
+const Auth = ({setCorrect, setAuthName}) => {
     const [visible, setVisible] = useState(!isAuthenticated());
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -32,7 +32,7 @@ const Auth = ({setCorrect}) => {
         }
     }, []);
 
-    const handleSubmit = async (event) => {
+   const handleSubmit = async (event) => {
         event.preventDefault();
     
         if (!login || !password) {
@@ -52,15 +52,16 @@ const Auth = ({setCorrect}) => {
             if (response.status === 200) {
                 if (response.data.access_token) {
                     // Для входа
+                    setAuthName(login)
                     setToken(response.data.access_token);
                     setMessage("Авторизация прошла успешно!");
+                    console.log(login)
+                    console.log(login)
                     setSave(true);
                 } else if (visible) {
                     // Для регистрации
                     setMessage("Регистрация успешна! Теперь вы можете войти.");
                     setVisible(false); // Переключаем на форму входа
-                    setLogin(''); // Очищаем поля
-                    setPassword('');
                 }
             }
         } catch (error) {
@@ -69,12 +70,15 @@ const Auth = ({setCorrect}) => {
                 if (error.response.status === 405) {
                     errorMessage = 'Неподдерживаемый метод запроса';
                 }
+                if (error.response.status === 422) {
+                    errorMessage = 'Что то не так';
+                }
                 errorMessage = error.response.data.message || errorMessage;
             }
             setMessage(`Ошибка: ${errorMessage}`);
             console.error('Ошибка:', error.config);
         }
-    };
+};
 
     return (
         <>
