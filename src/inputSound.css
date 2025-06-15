@@ -6,5 +6,18 @@
 }
 
 .formMusic {
-    margin: auto;
+    background-color: rgb(197, 197, 197);
+    width: 50em;
+    height: 25em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.contentformMusic {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }

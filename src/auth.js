@@ -8,7 +8,7 @@ const isAuthenticated = () => !!localStorage.getItem('token');
 
 const Auth = ({setCorrect, setAuthName}) => {
     const [visible, setVisible] = useState(!isAuthenticated());
-    const [login, setLogin] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [userData, setUserData] = useState(null);
@@ -16,7 +16,7 @@ const Auth = ({setCorrect, setAuthName}) => {
 
     const toggleForm = () => {
         setVisible(prevState => !prevState);
-        setMessage(''); // Очищаем сообщение при переключении формы
+        setMessage('');
     };
 
     useEffect(() => {
@@ -32,52 +32,74 @@ const Auth = ({setCorrect, setAuthName}) => {
         }
     }, []);
 
-   const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        if (!login || !password) {
-            setMessage("Заполните все поля!");
-            return;
-        }
-    
-        const endpoint = visible ? 'register/' : 'login/'; 
-        const API_BASE_URL = 'http://localhost:8000/users';
-    
-        try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, { 
-                login, 
-                password 
-            });
+    const handleSubmit = async (event) => {
+    event.preventDefault();
 
-            if (response.status === 200) {
-                if (response.data.access_token) {
-                    // Для входа
-                    setAuthName(login)
-                    setToken(response.data.access_token);
-                    setMessage("Авторизация прошла успешно!");
-                    console.log(login)
-                    console.log(login)
-                    setSave(true);
-                } else if (visible) {
-                    // Для регистрации
-                    setMessage("Регистрация успешна! Теперь вы можете войти.");
-                    setVisible(false); // Переключаем на форму входа
+    if (!username || !password) {
+        setMessage("Заполните все поля!");
+        return;
+    }
+
+    const API_BASE_URL = 'http://localhost:8000';
+    const isRegister = visible;
+    const endpoint = isRegister ? '/users/register/' : '/users/login/';
+
+    try {
+        // Подготовка данных в зависимости от типа запроса
+        let requestData;
+        let config;
+
+        if (isRegister) {
+            // Для регистрации - JSON
+            requestData = { username, password };
+            config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
-            }
-        } catch (error) {
-            let errorMessage = 'Ошибка сервера';
-            if (error.response) {
-                if (error.response.status === 405) {
-                    errorMessage = 'Неподдерживаемый метод запроса';
+            };
+        } else {
+            // Для авторизации - x-www-form-urlencoded
+            const params = new URLSearchParams();
+            params.append('username', username);
+            params.append('password', password);
+            
+            requestData = params.toString();
+            config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
-                if (error.response.status === 422) {
-                    errorMessage = 'Что то не так';
-                }
-                errorMessage = error.response.data.message || errorMessage;
-            }
-            setMessage(`Ошибка: ${errorMessage}`);
-            console.error('Ошибка:', error.config);
+            };
         }
+
+        const response = await axios.post(`${API_BASE_URL}${endpoint}`, requestData, config);
+
+        if (response.status === 200) {
+            if (response.data.access_token) {
+                setToken(response.data.access_token);
+                setMessage(isRegister ? "Регистрация успешна!" : "Авторизация прошла успешно!");
+                setSave(true);
+                setAuthName(username);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+            }
+        }
+    } catch (error) {
+        let errorMessage = 'Ошибка сервера';
+        if (error.response) {
+            if (error.response.status === 400 || error.response.status === 401) {
+                errorMessage = 'Неверное имя пользователя или пароль';
+            } 
+            else if (error.response.status === 404) {
+                errorMessage = 'Endpoint не найден. Проверьте URL.';
+            }
+            else if (error.response.status === 422) {
+                errorMessage = error.response.data.detail || 
+                             'Ошибка валидации данных';
+            }
+            errorMessage = error.response.data?.message || errorMessage;
+        }
+        setMessage(`Ошибка: ${errorMessage}`);
+        console.error('Ошибка:', error.response?.data || error.message);
+    }
 };
 
     return (
@@ -91,10 +113,10 @@ const Auth = ({setCorrect, setAuthName}) => {
                             <h1 className='title_auth'>{visible ? 'Регистрация' : 'Вход в аккаунт'}</h1>
                             <input
                                 type='text'
-                                placeholder='Логин'
+                                placeholder='Имя пользователя'
                                 className='input_auth'
-                                value={login}
-                                onChange={(e) => setLogin(e.target.value)}
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
                             <br />
