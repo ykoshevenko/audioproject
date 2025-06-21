@@ -1,4 +1,4 @@
-import './soundSett.css'
+import './style/soundSett.scss'
 
 function SoundSettings() {
     return (

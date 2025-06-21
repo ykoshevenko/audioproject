@@ -1,4 +1,4 @@
-import './auth.css';
+import './style/auth.scss';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getUserByToken, getToken, setToken } from './token';

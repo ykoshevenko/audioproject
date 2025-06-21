@@ -1,4 +1,4 @@
-import './user.css';
+import './style/user.scss';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getToken } from './token';

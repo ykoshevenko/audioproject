@@ -1,4 +1,4 @@
-import './App.css';
+import './style/App.scss';
 import { useState } from 'react';
 import Header from './header';
 import Auth from './auth'

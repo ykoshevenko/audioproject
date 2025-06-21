@@ -1,4 +1,4 @@
-import './imageSound.css'
+import './style/imageSound.scss'
 
 function ImageSound() {
     return (

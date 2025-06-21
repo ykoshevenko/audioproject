@@ -1,4 +1,4 @@
-import './home.css'
+import './style/home.scss'
 import ImageSound from './imageSound'
 import SoundItem from './sounditem'
 import axios from 'axios'

@@ -1,4 +1,4 @@
-import './header.css'
+import './style/header.scss'
 
 function Header({setCorrect}) {
     return (

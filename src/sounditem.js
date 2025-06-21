@@ -1,4 +1,4 @@
-import './sounditem.css'
+import './style/sounditem.scss'
 
 function SoundItem() {
     return (

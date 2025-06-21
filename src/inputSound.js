@@ -1,4 +1,4 @@
-import './inputSound.css'
+import './style/inputSound.scss'
 
 function SoundInput() {
     return (

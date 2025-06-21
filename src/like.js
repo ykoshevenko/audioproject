@@ -1,4 +1,4 @@
-import './like.css'
+import './style/like.scss'
 import ImageSound from './imageSound';
 
 function Like() {
